@@ -3,8 +3,113 @@ var game = {
   y: 0,
   width: 0,
   height: 0,
-  backgroundColor: '#333',
+  backgroundColor: '#00f',
   context: null,
   state: null,
   lastStateChange: 30,
+  dynamicList:  [],
   elements: [],
+  start: function(canvas) {
+    this.x = canvas.x;
+    this.y = canvas.y;
+    this.width = canvas.width;
+    this.height = canvas.height;
+    this.context = canvas.context;
+    this.state = gameStatesEnum.playing;
+    wall.create('top', 0, -980, game.width, 1000);
+    wall.create('bottom', 0, game.height-20, game.width, 1000);
+    wall.create('left', -980, 0, 1000, game.height);
+    wall.create('right', game.width-20, 0, 1000, game.height);
+    this.elements.push(wall.list.top);
+    this.elements.push(wall.list.bottom);
+    this.elements.push(wall.list.left);
+    this.elements.push(wall.list.right);
+    this.elements.push(player);
+
+    var i, j, id, cardsWidth, cardsHeight
+    cardsWidth = (game.width / 4)
+    cardsHeight = (game.height / 3)
+
+    for(i = 0; i < 4; i++){
+      for(j = 0; j < 6; j++){
+        id = 'cards'+j+i
+        cards.create(id, j * cardsWidth + 5, i * cardsHeight + 5, cardsWidth - 10, cardsHeight - 10)
+        game.dynamicList.push(cards.list[id])
+      }
+    }
+
+
+    for (var i = 0; i < game.elements.length; i++) {
+      game.elements[i].init();
+    }
+    setInterval(this.update.bind(this), 1000/60);
+  },
+  pause: function() {
+    if(this.state === gameStatesEnum.pause) {
+      this.state = gameStatesEnum.playing;
+    } else if(this.state === gameStatesEnum.playing) {
+      this.state = gameStatesEnum.pause;
+    }
+    this.lastStateChange = 0;
+  },
+  win: function() {
+    this.state = gameStatesEnum.win;
+  },
+  over: function() {
+    this.state = gameStatesEnum.over;
+  },
+  update: function() {
+    ++this.lastStateChange;
+    if(this.state === gameStatesEnum.playing) {
+      //hago update de todos los objetos del juego
+      for (var i = 0; i < this.elements.length; i++) {
+        this.elements[i].update();
+
+      }
+      for (var i = 0; i < this.dynamicList.length; i++) {
+        this.dynamicList[i].update();
+
+      }
+    }
+    if(keyboard.p && this.lastStateChange > 30) {
+      this.pause();
+    }
+    //llamo al render global
+    this.render();
+  },
+  render: function() {
+    if(this.state === gameStatesEnum.playing) {
+      //limpio la pantalla
+      this.context.fillStyle = this.backgroundColor;
+      this.context.fillRect(this.x, this.y, this.width, this.height);
+      //llamo a render de todos los objetos del juego
+      for (var i = 0; i < this.elements.length; i++) {
+        this.elements[i].render();
+      }
+      for (var i = 0; i < this.dynamicList.length; i++) {
+        this.dynamicList[i].render();
+      }
+    } else {
+      this.context.fillStyle = 'rgba(50, 50, 50, 0.01)';
+      this.context.fillRect(this.x, this.y, this.width, this.height);
+      switch(this.state) {
+        case gameStatesEnum.pause:
+          text.draw('Pausa', '#fff');
+          break;
+        case gameStatesEnum.win:
+          text.draw('Nivel superado: '+player.score+'pts', '#fff');
+          break;
+        case gameStatesEnum.over:
+          text.draw('Game Over', '#fff');
+          break;
+      }
+    }
+  }
+};
+
+var gameStatesEnum = {
+  playing: 'playing',
+  pause: 'pause',
+  win: 'w',
+  over: 'o'
+};
