@@ -9,10 +9,7 @@ var resize = function(evt) {
 
 var load = function() {
   resize();
-  console.dir(document);
-  document.onclick = function (evt) {
-    console.log(evt);
-  }
+  document.onclick = mouse.onClick
   document.onkeydown = keyboard.press;
   document.onkeyup = keyboard.release;
   var canvas = document.getElementById('game');
