@@ -16,7 +16,7 @@ var game = {
     this.height = canvas.height;
     this.context = canvas.context;
     this.state = gameStatesEnum.playing;
-    wall.create('top', 0, -980, game.width, 1000);
+  /*wall.create('top', 0, -980, game.width, 1000);
     wall.create('bottom', 0, game.height-20, game.width, 1000);
     wall.create('left', -980, 0, 1000, game.height);
     wall.create('right', game.width-20, 0, 1000, game.height);
@@ -24,23 +24,44 @@ var game = {
     this.elements.push(wall.list.bottom);
     this.elements.push(wall.list.left);
     this.elements.push(wall.list.right);
-    this.elements.push(player);
+    this.elements.push(player);*/
 
     var i, j, id, cardsWidth, cardsHeight
     cardsWidth = (game.width / 4)
     cardsHeight = (game.height / 3)
 
-    for(i = 0; i < 4; i++){
-      for(j = 0; j < 6; j++){
+    var groups = {
+      0: {
+        0: 'A',
+        1: 'B',
+        2: 'C',
+        3: 'D'
+      },
+      1: {
+        0: 'E',
+        1: 'F',
+        2: 'A',
+        3: 'B'
+      },
+      2: {
+        0: 'C',
+        1: 'D',
+        2: 'E',
+        3: 'F'
+      },
+    }
+    for(i = 0; i < 3; i++){
+      for(j = 0; j < 4; j++){
         id = 'cards'+j+i
-        cards.create(id, j * cardsWidth + 5, i * cardsHeight + 5, cardsWidth - 10, cardsHeight - 10)
+        cards.create(id, j * cardsWidth + 5, i * cardsHeight + 5, cardsWidth - 10, cardsHeight - 10 , groups[i][j])
         game.dynamicList.push(cards.list[id])
       }
     }
-
-
     for (var i = 0; i < game.elements.length; i++) {
       game.elements[i].init();
+    }
+    for (var i = 0; i < game.dynamicList.length; i++) {
+      game.dynamicList[i].init();
     }
     setInterval(this.update.bind(this), 1000/60);
   },

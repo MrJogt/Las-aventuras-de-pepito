@@ -6,7 +6,7 @@ var player = {
   backgroundColor: '#0C0',
   speed: 3,
   jumpForce: null,
-  maxJumpForce: 5,
+  maxJumpForce: 10,
   score: 0,
   move: function() {
     //move left and right
