@@ -3,12 +3,16 @@ var game = {
   y: 0,
   width: 0,
   height: 0,
-  backgroundColor: '#00f',
+  backgroundColor: '#0f0',
+  image: new Image(),
   context: null,
   state: null,
   lastStateChange: 30,
   dynamicList:  [],
   elements: [],
+  level: null,
+  time: 100,
+  timeIntervalId: undefined,
   start: function(canvas) {
     this.x = canvas.x;
     this.y = canvas.y;
@@ -16,6 +20,8 @@ var game = {
     this.height = canvas.height;
     this.context = canvas.context;
     this.state = gameStatesEnum.playing;
+    this.level = gamelevelEnum.initial;
+    this.image.src = 'img/Pared_ladrillos.jpg';
   /*wall.create('top', 0, -980, game.width, 1000);
     wall.create('bottom', 0, game.height-20, game.width, 1000);
     wall.create('left', -980, 0, 1000, game.height);
@@ -26,9 +32,87 @@ var game = {
     this.elements.push(wall.list.right);
     this.elements.push(player);*/
 
+    // var i, j, id, cardsWidth, cardsHeight
+    // cardsWidth = (game.width / 4)
+    // cardsHeight = (game.height / 3)
+    //
+    // var groups = {
+    //   0: {
+    //     0: 'A',
+    //     1: 'B',
+    //     2: 'C',
+    //     3: 'D'
+    //   },
+    //   1: {
+    //     0: 'E',
+    //     1: 'F',
+    //     2: 'A',
+    //     3: 'B'
+    //   },
+    //   2: {
+    //     0: 'C',
+    //     1: 'D',
+    //     2: 'E',
+    //     3: 'F'
+    //   },
+    // }
+    //
+    // for(i = 0; i < 3; i++){
+    //   for(j = 0; j < 4; j++){
+    //     id = 'cards'+j+i
+    //     cards.create(id, j * cardsWidth + 5, i * cardsHeight + 5, cardsWidth - 10, cardsHeight - 10 , groups[i][j])
+    //     game.dynamicList.push(cards.list[id])
+    //   }
+    // }
+
+    // var i, j, id, cardsWidth, cardsHeight
+    // cardsWidth = (game.width / 4)
+    // cardsHeight = (game.height / 4)
+    //
+    // var groups = {
+    //   0: {
+    //     0: 'A',
+    //     1: 'B',
+    //     2: 'H',
+    //     3: 'G'
+    //   },
+    //   1: {
+    //     0: 'E',
+    //     1: 'F',
+    //     2: 'C',
+    //     3: 'D'
+    //   },
+    //   2: {
+    //     0: 'F',
+    //     1: 'E',
+    //     2: 'H',
+    //     3: 'G'
+    //   },
+    //   3:{
+    //     0: 'B',
+    //     1: 'A',
+    //     2: 'D',
+    //     3: 'C'
+    //   },
+    // }
+    //
+    // for(i = 0; i < 4; i++){
+    //   for(j = 0; j < 4; j++){
+    //     id = 'cards'+j+i
+    //     cards.create(id, j * cardsWidth + 5,
+    //                   i * cardsHeight + 5,
+    //                   cardsWidth - 10,
+    //                   cardsHeight - 10 ,
+    //                   groups[i][j])
+    //     game.dynamicList.push(cards.list[id])
+    //   }
+    // }
+    // for (var i = 0; i < game.elements.length; i++) {
+    //   game.elements[i].init();
+    // }
     var i, j, id, cardsWidth, cardsHeight
+    cardsHeight = (game.height / 5)
     cardsWidth = (game.width / 4)
-    cardsHeight = (game.height / 3)
 
     var groups = {
       0: {
@@ -40,20 +124,36 @@ var game = {
       1: {
         0: 'E',
         1: 'F',
+        2: 'G',
+        3: 'H'
+      },
+      2: {
+        0: 'I',
+        1: 'J',
         2: 'A',
         3: 'B'
       },
-      2: {
+      3:{
         0: 'C',
         1: 'D',
         2: 'E',
         3: 'F'
       },
-    }
-    for(i = 0; i < 3; i++){
+      4:{
+        0: 'G',
+        1: 'H',
+        2: 'I',
+        3: 'J'
+      },
+    };
+    for(i = 0; i < 5; i++){
       for(j = 0; j < 4; j++){
         id = 'cards'+j+i
-        cards.create(id, j * cardsWidth + 5, i * cardsHeight + 5, cardsWidth - 10, cardsHeight - 10 , groups[i][j])
+        cards.create(id, j * cardsWidth + 5,
+                      i * cardsHeight + 5,
+                      cardsWidth - 10,
+                      cardsHeight - 10 ,
+                      groups[i][j])
         game.dynamicList.push(cards.list[id])
       }
     }
@@ -63,7 +163,11 @@ var game = {
     for (var i = 0; i < game.dynamicList.length; i++) {
       game.dynamicList[i].init();
     }
+    this.timeIntervalId = setInterval(this.timer.bind(this), 1000)
     setInterval(this.update.bind(this), 1000/60);
+  },
+  timer: function () {
+    this.time--
   },
   pause: function() {
     if(this.state === gameStatesEnum.pause) {
@@ -77,6 +181,8 @@ var game = {
     this.state = gameStatesEnum.win;
   },
   over: function() {
+    console.log(this.timeIntervalId)
+    clearInterval(this.timeIntervalId)
     this.state = gameStatesEnum.over;
   },
   update: function() {
@@ -89,11 +195,13 @@ var game = {
       }
       for (var i = 0; i < this.dynamicList.length; i++) {
         this.dynamicList[i].update();
-
       }
     }
     if(keyboard.p && this.lastStateChange > 30) {
       this.pause();
+    }
+    if(this.time == 0){
+      this.over()
     }
     //llamo al render global
     this.render();
@@ -102,7 +210,7 @@ var game = {
     if(this.state === gameStatesEnum.playing) {
       //limpio la pantalla
       this.context.fillStyle = this.backgroundColor;
-      this.context.fillRect(this.x, this.y, this.width, this.height);
+      this.context.drawImage(this.image, this.x, this.y, this.width, this.height);
       //llamo a render de todos los objetos del juego
       for (var i = 0; i < this.elements.length; i++) {
         this.elements[i].render();
@@ -110,6 +218,7 @@ var game = {
       for (var i = 0; i < this.dynamicList.length; i++) {
         this.dynamicList[i].render();
       }
+
     } else {
       this.context.fillStyle = 'rgba(50, 50, 50, 0.01)';
       this.context.fillRect(this.x, this.y, this.width, this.height);
@@ -125,6 +234,9 @@ var game = {
           break;
       }
     }
+
+    this.context.fillRect(10, 10, 80, 50);
+    text.draw(game.time, '#000', null, null, null, null, 49, 45);
   }
 };
 
@@ -133,4 +245,8 @@ var gameStatesEnum = {
   pause: 'pause',
   win: 'w',
   over: 'o'
+}
+var gamelevelEnum = {
+  initial: '1',
+  mid: '2'
 };
