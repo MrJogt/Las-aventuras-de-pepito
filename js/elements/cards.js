@@ -40,52 +40,48 @@ var cards = {
         }
       },
       unflip: function(){
-        console.log(cards.lastChoose)
         cards.list[cards.lastChoose.id].image.src = 'img/DorsoCartas.jpg'
         cards.list[cards.lastChoose.id].selected = false;
         this.selected = false;
-        cards.lastChoose = undefined
+        cards.lastChoose = undefined;
         this.image.src = 'img/DorsoCartas.jpg';
       },
       flip: function(){
         switch (this.group) {
           case 'A':
-          this.image.src = 'img/Circulo.png';
+          this.image.src = 'img/Guinda_Rugby.jpg';
             break;
           case 'B':
-          this.image.src = 'img/Triangulo.png';
+          this.image.src = 'img/Pelota_Tenis.jpg';
             break;
           case 'C':
-          this.image.src = 'img/Cuadrado.jpg';
+          this.image.src = 'img/Pelota_Futbol.png';
             break;
           case 'D':
-          this.image.src = 'img/Pentagono.png';
+          this.image.src = 'img/Pelota_Basquet.png';
               break;
           case 'E':
-          this.image.src = 'img/Hexagono.png';
+          this.image.src = 'img/Pelota_Bowling.png';
               break;
           case 'F':
-          this.image.src = 'img/Heptagono.jpg';
+          this.image.src = 'img/Pelota_Golf.png';
               break;
           case 'G':
-          this.image.src = 'img/Octogono.png';
+          this.image.src = 'img/Pelota_Bola8.png';
               break;
           case 'H':
-          this.image.src = 'img/Eneagono.jpg';
+          this.image.src = 'img/Pelota_Baseball.jpg';
               break;
           case 'I':
-          this.image.src = 'img/Decagono.jpg';
+          this.image.src = 'img/Pelota_FAmericano.png';
               break;
           case 'J':
-          this.image.src = 'img/Endecagono.png';
+          this.image.src = 'img/Pelota_Badmintong.jpg';
               break;
-          // default:
-          // console.log("Mal");
         }
         this.backgroundColor = '#CCCCFF'
       },
       destroy: function(){
-        console.log(cards);
         var i = game.dynamicList.indexOf(cards.list[cards.lastChoose.id])
            game.dynamicList.splice(i, 1)
         delete cards.list[cards.lastChoose.id]

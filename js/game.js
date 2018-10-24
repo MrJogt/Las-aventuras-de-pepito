@@ -11,7 +11,8 @@ var game = {
   dynamicList:  [],
   elements: [],
   level: null,
-  time: 100,
+  time: 80,
+  imageWin: new Image(),
   timeIntervalId: undefined,
   start: function(canvas) {
     this.x = canvas.x;
@@ -22,6 +23,7 @@ var game = {
     this.state = gameStatesEnum.playing;
     this.level = gamelevelEnum.initial;
     this.image.src = 'img/Pared_ladrillos.jpg';
+    this.imageWin.src = 'img/Has_Ganado.png';
   /*wall.create('top', 0, -980, game.width, 1000);
     wall.create('bottom', 0, game.height-20, game.width, 1000);
     wall.create('left', -980, 0, 1000, game.height);
@@ -116,34 +118,34 @@ var game = {
 
     var groups = {
       0: {
-        0: 'A',
-        1: 'B',
-        2: 'C',
+        0: 'J',
+        1: 'A',
+        2: 'A',
         3: 'D'
       },
       1: {
-        0: 'E',
-        1: 'F',
-        2: 'G',
-        3: 'H'
+        0: 'H',
+        1: 'G',
+        2: 'B',
+        3: 'E'
       },
       2: {
-        0: 'I',
-        1: 'J',
-        2: 'A',
+        0: 'F',
+        1: 'I',
+        2: 'C',
         3: 'B'
       },
       3:{
-        0: 'C',
+        0: 'J',
         1: 'D',
         2: 'E',
         3: 'F'
       },
       4:{
-        0: 'G',
+        0: 'C',
         1: 'H',
         2: 'I',
-        3: 'J'
+        3: 'G'
       },
     };
     for(i = 0; i < 5; i++){
@@ -168,17 +170,20 @@ var game = {
   },
   timer: function () {
     this.time--
-  },
+    },
   pause: function() {
     if(this.state === gameStatesEnum.pause) {
       this.state = gameStatesEnum.playing;
+      this.timeIntervalId = setInterval(this.timer.bind(this), 1000)
     } else if(this.state === gameStatesEnum.playing) {
       this.state = gameStatesEnum.pause;
+      clearInterval(this.timeIntervalId)
     }
     this.lastStateChange = 0;
   },
   win: function() {
     this.state = gameStatesEnum.win;
+    clearInterval(this.timeIntervalId)
   },
   over: function() {
     console.log(this.timeIntervalId)
@@ -191,7 +196,6 @@ var game = {
       //hago update de todos los objetos del juego
       for (var i = 0; i < this.elements.length; i++) {
         this.elements[i].update();
-
       }
       for (var i = 0; i < this.dynamicList.length; i++) {
         this.dynamicList[i].update();
@@ -203,6 +207,10 @@ var game = {
     if(this.time == 0){
       this.over()
     }
+    if(Object.keys(cards.list).length === 0) {
+      this.win()
+    }
+
     //llamo al render global
     this.render();
   },
@@ -225,12 +233,17 @@ var game = {
       switch(this.state) {
         case gameStatesEnum.pause:
           text.draw('Pausa', '#fff');
+          text.draw('Modo de juego:', '#FF99FF', null, null, null, null, game.width/2, game.height/2 + 50);
+          text.draw('Cada carta tiene su par identico, debes', '#FF99FF',
+                    null, null, null, null, game.width/2, game.height/2 + 75);
+          text.draw('encontrar todos los pares para superar el nivel', '#FF99FF',
+                    null, null, null, null, game.width/2, game.height/2 + 100);
           break;
         case gameStatesEnum.win:
-          text.draw('Nivel superado: '+player.score+'pts', '#fff');
+            this.context.drawImage(this.imageWin, this.x, this.y, this.width, this.height);
           break;
         case gameStatesEnum.over:
-          text.draw('Game Over', '#fff');
+          text.draw('Game Over', '#660000');
           break;
       }
     }
