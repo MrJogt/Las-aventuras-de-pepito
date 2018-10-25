@@ -16,7 +16,6 @@ var keyboard = {
     }
   }
 };
-
 var keyboardEnum = {
   ArrowUp: 'up',
   ArrowLeft: 'left',

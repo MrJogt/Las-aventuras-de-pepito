@@ -6,7 +6,6 @@ var resize = function(evt) {
   canvas.style.width = (canvas.width * scale) + 'px';
   canvas.style.height = (canvas.height * scale) + 'px';
 };
-
 var load = function() {
   resize();
   document.onclick = mouse.onClick
@@ -22,6 +21,5 @@ var load = function() {
   };
   game.start(data);
 };
-
 window.onload = load;
 window.onresize = resize;

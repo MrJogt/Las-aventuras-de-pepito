@@ -4,7 +4,6 @@ var game = {
   width: 0,
   height: 0,
   backgroundColor: '#0f0',
-  image: new Image(),
   context: null,
   state: null,
   lastStateChange: 30,
@@ -12,7 +11,10 @@ var game = {
   elements: [],
   level: null,
   time: 80,
+  image: new Image(),
   imageWin: new Image(),
+  imageLost: new Image(),
+  imagePause: new Image(),
   timeIntervalId: undefined,
   start: function(canvas) {
     this.x = canvas.x;
@@ -24,7 +26,9 @@ var game = {
     this.level = gamelevelEnum.initial;
     this.image.src = 'img/Pared_ladrillos.jpg';
     this.imageWin.src = 'img/Has_Ganado.png';
-  /*wall.create('top', 0, -980, game.width, 1000);
+    this.imageLost.src = 'img/Game_Over.png';
+    this.imagePause.src = 'img/Pause.jpg';
+    /*wall.create('top', 0, -980, game.width, 1000);
     wall.create('bottom', 0, game.height-20, game.width, 1000);
     wall.create('left', -980, 0, 1000, game.height);
     wall.create('right', game.width-20, 0, 1000, game.height);
@@ -33,7 +37,6 @@ var game = {
     this.elements.push(wall.list.left);
     this.elements.push(wall.list.right);
     this.elements.push(player);*/
-
     // var i, j, id, cardsWidth, cardsHeight
     // cardsWidth = (game.width / 4)
     // cardsHeight = (game.height / 3)
@@ -66,11 +69,9 @@ var game = {
     //     game.dynamicList.push(cards.list[id])
     //   }
     // }
-
     // var i, j, id, cardsWidth, cardsHeight
     // cardsWidth = (game.width / 4)
     // cardsHeight = (game.height / 4)
-    //
     // var groups = {
     //   0: {
     //     0: 'A',
@@ -97,7 +98,6 @@ var game = {
     //     3: 'C'
     //   },
     // }
-    //
     // for(i = 0; i < 4; i++){
     //   for(j = 0; j < 4; j++){
     //     id = 'cards'+j+i
@@ -115,7 +115,6 @@ var game = {
     var i, j, id, cardsWidth, cardsHeight
     cardsHeight = (game.height / 5)
     cardsWidth = (game.width / 4)
-
     var groups = {
       0: {
         0: 'J',
@@ -210,8 +209,6 @@ var game = {
     if(Object.keys(cards.list).length === 0) {
       this.win()
     }
-
-    //llamo al render global
     this.render();
   },
   render: function() {
@@ -226,33 +223,30 @@ var game = {
       for (var i = 0; i < this.dynamicList.length; i++) {
         this.dynamicList[i].render();
       }
-
     } else {
       this.context.fillStyle = 'rgba(50, 50, 50, 0.01)';
       this.context.fillRect(this.x, this.y, this.width, this.height);
       switch(this.state) {
         case gameStatesEnum.pause:
-          text.draw('Pausa', '#fff');
-          text.draw('Modo de juego:', '#FF99FF', null, null, null, null, game.width/2, game.height/2 + 50);
+        this.context.drawImage(this.imagePause, this.x, this.y, this.width, this.height);
+          text.draw('Modo de juego:', '#FF99FF', null, null, null, null, game.width/2, game.height/2 + 110);
           text.draw('Cada carta tiene su par identico, debes', '#FF99FF',
-                    null, null, null, null, game.width/2, game.height/2 + 75);
+                    null, null, null, null, game.width/2, game.height/2 + 135);
           text.draw('encontrar todos los pares para superar el nivel', '#FF99FF',
-                    null, null, null, null, game.width/2, game.height/2 + 100);
+                    null, null, null, null, game.width/2, game.height/2 + 160);
           break;
         case gameStatesEnum.win:
             this.context.drawImage(this.imageWin, this.x, this.y, this.width, this.height);
           break;
         case gameStatesEnum.over:
-          text.draw('Game Over', '#660000');
+        this.context.drawImage(this.imageLost, this.x, this.y, this.width, this.height);
           break;
       }
     }
-
     this.context.fillRect(10, 10, 80, 50);
     text.draw(game.time, '#000', null, null, null, null, 49, 45);
   }
 };
-
 var gameStatesEnum = {
   playing: 'playing',
   pause: 'pause',
