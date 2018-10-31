@@ -16,6 +16,9 @@ var game = {
   imageLost: new Image(),
   imagePause: new Image(),
   timeIntervalId: undefined,
+  startLevel1: function(){},
+  startLevel2: function(){},
+  startLevel3: function(){},
   start: function(canvas) {
     this.x = canvas.x;
     this.y = canvas.y;
@@ -37,127 +40,135 @@ var game = {
     this.elements.push(wall.list.left);
     this.elements.push(wall.list.right);
     this.elements.push(player);*/
-    // var i, j, id, cardsWidth, cardsHeight
-    // cardsWidth = (game.width / 4)
-    // cardsHeight = (game.height / 3)
-    //
-    // var groups = {
-    //   0: {
-    //     0: 'A',
-    //     1: 'B',
-    //     2: 'C',
-    //     3: 'D'
-    //   },
-    //   1: {
-    //     0: 'E',
-    //     1: 'F',
-    //     2: 'A',
-    //     3: 'B'
-    //   },
-    //   2: {
-    //     0: 'C',
-    //     1: 'D',
-    //     2: 'E',
-    //     3: 'F'
-    //   },
-    // }
-    //
-    // for(i = 0; i < 3; i++){
-    //   for(j = 0; j < 4; j++){
-    //     id = 'cards'+j+i
-    //     cards.create(id, j * cardsWidth + 5, i * cardsHeight + 5, cardsWidth - 10, cardsHeight - 10 , groups[i][j])
-    //     game.dynamicList.push(cards.list[id])
-    //   }
-    // }
-    // var i, j, id, cardsWidth, cardsHeight
-    // cardsWidth = (game.width / 4)
-    // cardsHeight = (game.height / 4)
-    // var groups = {
-    //   0: {
-    //     0: 'A',
-    //     1: 'B',
-    //     2: 'H',
-    //     3: 'G'
-    //   },
-    //   1: {
-    //     0: 'E',
-    //     1: 'F',
-    //     2: 'C',
-    //     3: 'D'
-    //   },
-    //   2: {
-    //     0: 'F',
-    //     1: 'E',
-    //     2: 'H',
-    //     3: 'G'
-    //   },
-    //   3:{
-    //     0: 'B',
-    //     1: 'A',
-    //     2: 'D',
-    //     3: 'C'
-    //   },
-    // }
-    // for(i = 0; i < 4; i++){
-    //   for(j = 0; j < 4; j++){
-    //     id = 'cards'+j+i
-    //     cards.create(id, j * cardsWidth + 5,
-    //                   i * cardsHeight + 5,
-    //                   cardsWidth - 10,
-    //                   cardsHeight - 10 ,
-    //                   groups[i][j])
-    //     game.dynamicList.push(cards.list[id])
-    //   }
-    // }
-    // for (var i = 0; i < game.elements.length; i++) {
-    //   game.elements[i].init();
-    // }
-    var i, j, id, cardsWidth, cardsHeight
-    cardsHeight = (game.height / 5)
-    cardsWidth = (game.width / 4)
-    var groups = {
-      0: {
-        0: 'J',
-        1: 'A',
-        2: 'A',
-        3: 'D'
-      },
-      1: {
-        0: 'H',
-        1: 'G',
-        2: 'B',
-        3: 'E'
-      },
-      2: {
-        0: 'F',
-        1: 'I',
-        2: 'C',
-        3: 'B'
-      },
-      3:{
-        0: 'J',
-        1: 'D',
-        2: 'E',
-        3: 'F'
-      },
-      4:{
-        0: 'C',
-        1: 'H',
-        2: 'I',
-        3: 'G'
-      },
-    };
-    for(i = 0; i < 5; i++){
-      for(j = 0; j < 4; j++){
-        id = 'cards'+j+i
-        cards.create(id, j * cardsWidth + 5,
-                      i * cardsHeight + 5,
-                      cardsWidth - 10,
-                      cardsHeight - 10 ,
-                      groups[i][j])
-        game.dynamicList.push(cards.list[id])
-      }
-    }
+      //startLevel1: function(canvas) {
+        // var i, j, id, cardsWidth, cardsHeight
+        //   cardsWidth = (game.width / 4)
+        //   cardsHeight = (game.height / 3)
+        //
+        //   var groups = {
+        //     0: {
+        //       0: 'A',
+        //       1: 'B',
+        //       2: 'C',
+        //       3: 'D'
+        //     },
+        //     1: {
+        //       0: 'E',
+        //       1: 'F',
+        //       2: 'A',
+        //       3: 'B'
+        //     },
+        //     2: {
+        //       0: 'C',
+        //       1: 'D',
+        //       2: 'E',
+        //       3: 'F'
+        //     },
+        //   }
+        //
+        //   for(i = 0; i < 3; i++){
+        //     for(j = 0; j < 4; j++){
+        //       id = 'cards'+j+i
+        //       cards.create(id, j * cardsWidth + 5,
+        //                     i * cardsHeight + 5,
+        //                     cardsWidth - 10,
+        //                     cardsHeight - 10 ,
+        //                     groups[i][j])
+        //       game.dynamicList.push(cards.list[id])
+        //     }
+        //   }
+        // //}
+      // startLevel2: function(canvas){
+      //   var i, j, id, cardsWidth, cardsHeight
+      //   cardsWidth = (game.width / 4)
+      //   cardsHeight = (game.height / 4)
+      //   var groups = {
+      //     0: {
+      //       0: 'A',
+      //       1: 'B',
+      //       2: 'C',
+      //       3: 'D'
+      //     },
+      //     1: {
+      //       0: 'E',
+      //       1: 'F',
+      //       2: 'G',
+      //       3: 'H'
+      //     },
+      //     2: {
+      //       0: 'A',
+      //       1: 'B',
+      //       2: 'C',
+      //       3: 'D'
+      //     },
+      //     3: {
+      //       0: 'E',
+      //       1: 'F',
+      //       2: 'G',
+      //       3: 'H'
+      //     },
+      //   }
+      //
+      //   for(i = 0; i < 4; i++){
+      //     for(j = 0; j < 4; j++){
+      //       id = 'cards'+j+i
+      //       cards.create(id, j * cardsWidth + 5,
+      //                     i * cardsHeight + 5,
+      //                     cardsWidth - 10,
+      //                     cardsHeight - 10,
+      //                     groups[i][j])
+      //       game.dynamicList.push(cards.list[id])
+      //     }
+      //   }
+      // }
+      // startLevel3: function(canvas){
+        var i, j, id, cardsWidth, cardsHeight
+        cardsHeight = (game.height / 5)
+        cardsWidth = (game.width / 4)
+        var groups = {
+          0: {
+            0: 'J',
+            1: 'A',
+            2: 'A',
+            3: 'D'
+          },
+          1: {
+            0: 'H',
+            1: 'G',
+            2: 'B',
+            3: 'E'
+          },
+          2: {
+            0: 'F',
+            1: 'I',
+            2: 'C',
+            3: 'B'
+          },
+          3:{
+            0: 'J',
+            1: 'D',
+            2: 'E',
+            3: 'F'
+          },
+          4:{
+            0: 'C',
+            1: 'H',
+            2: 'I',
+            3: 'G'
+          },
+        };
+        for(i = 0; i < 5; i++){
+          for(j = 0; j < 4; j++){
+            id = 'cards'+j+i
+            cards.create(id, j * cardsWidth + 5,
+                          i * cardsHeight + 5,
+                          cardsWidth - 10,
+                          cardsHeight - 10 ,
+                          groups[i][j])
+            game.dynamicList.push(cards.list[id])
+          }
+        }
+      // }
     for (var i = 0; i < game.elements.length; i++) {
       game.elements[i].init();
     }
@@ -206,9 +217,12 @@ var game = {
     if(this.time == 0){
       this.over()
     }
-    if(Object.keys(cards.list).length === 0) {
+    if(Object.keys(cards.list).length === 0 /*&& this.state === gamelevelEnum.last */) {
       this.win()
     }
+    // else if (Object.keys(cards.list).length === 10 && this.state === gamelevelEnum.initial) {
+    //   gamelevelEnum++;
+    // }
     this.render();
   },
   render: function() {
@@ -255,5 +269,6 @@ var gameStatesEnum = {
 }
 var gamelevelEnum = {
   initial: '1',
-  mid: '2'
+  mid: '2',
+  last: '3'
 };
