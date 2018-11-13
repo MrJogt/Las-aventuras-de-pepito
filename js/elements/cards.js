@@ -1,6 +1,7 @@
 var cards = {
   list: {},
   lastChoose: undefined,
+  waiting: false,
   create: function(id, x, y, width, height, group) {
     cards.list[id] = {
       id: id,
@@ -16,27 +17,32 @@ var cards = {
         this.image.src = 'img/DorsoCartas.jpg';
       },
       checkClick: function () {
-        if(this.x < mouse.x
-        && mouse.x < (this.x + this.width)
-        && this.y < mouse.y
-        && mouse.y < (this.y + this.height)) {
-          this.selected = true;
-          if(cards.lastChoose) {
-            if(cards.lastChoose.group === this.group
-              && cards.lastChoose != this) {
-              this.flip()
-              setTimeout(this.destroy.bind(this), 500)
+        if(!cards.waiting) {
+          if(this.x < mouse.x
+          && mouse.x < (this.x + this.width)
+          && this.y < mouse.y
+          && mouse.y < (this.y + this.height)) {
+            this.selected = true;
+            game.intentos++
+            if(cards.lastChoose) {
+              if(cards.lastChoose.group === this.group
+                && cards.lastChoose !== this) {
+                this.flip()
+                cards.waiting = true
+                setTimeout(this.destroy.bind(this), 500)
+              }
+              else{
+                this.flip()
+                cards.waiting = true
+                setTimeout(this.unflip.bind(this), 500)
+              }
             }
-            else{
+            else {
+              cards.lastChoose = this
               this.flip()
-              setTimeout(this.unflip.bind(this), 500)
             }
+            mouse.reset()
           }
-          else {
-            cards.lastChoose = this
-            this.flip()
-          }
-          mouse.reset()
         }
       },
       unflip: function(){
@@ -45,14 +51,15 @@ var cards = {
         this.selected = false;
         cards.lastChoose = undefined;
         this.image.src = 'img/DorsoCartas.jpg';
+        cards.waiting = false
       },
       flip: function(){
         switch (this.group) {
           case 'A':
-          this.image.src = 'img/Guinda_Rugby.jpg';
+          this.image.src = 'img/pelota_voley.png';
             break;
           case 'B':
-          this.image.src = 'img/Pelota_Tenis.jpg';
+          this.image.src = 'img/Pelota_Tenis.png';
             break;
           case 'C':
           this.image.src = 'img/Pelota_Futbol.png';
@@ -70,13 +77,13 @@ var cards = {
           this.image.src = 'img/Pelota_Bola8.png';
               break;
           case 'H':
-          this.image.src = 'img/Pelota_Baseball.jpg';
+          this.image.src = 'img/Pelota_Baseball.png';
               break;
           case 'I':
           this.image.src = 'img/Pelota_FAmericano.png';
               break;
           case 'J':
-          this.image.src = 'img/Pelota_Badmintong.jpg';
+          this.image.src = 'img/Pelota_Badmintong.png';
               break;
         }
         this.backgroundColor = '#CCCCFF'
@@ -89,6 +96,7 @@ var cards = {
           game.dynamicList.splice(i, 1)
         delete cards.list[this.id]
         cards.lastChoose = undefined
+        cards.waiting = false
       },
       update: function() {
         this.checkClick()

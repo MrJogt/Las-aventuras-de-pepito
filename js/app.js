@@ -1,13 +1,23 @@
 var resize = function(evt) {
   var canvas = document.getElementById('game');
-  var w = window.innerWidth / canvas.width;
-  var h = window.innerHeight / canvas.height;
-  var scale = Math.min(h, w);
-  canvas.style.width = (canvas.width * scale) + 'px';
-  canvas.style.height = (canvas.height * scale) + 'px';
+  var canvasRatio = canvas.height / canvas.width;
+  var windowRatio = window.innerHeight / window.innerWidth;
+  var width;
+  var height;
+
+  if (windowRatio < canvasRatio) {
+      height = window.innerHeight;
+      width = height / canvasRatio;
+  } else {
+      width = window.innerWidth;
+      height = width * canvasRatio;
+  }
+
+  canvas.style.width = width + 'px';
+  canvas.style.height = height + 'px';
 };
 var load = function() {
-  resize();
+  // resize();
   document.onclick = mouse.onClick
   document.onkeydown = keyboard.press;
   document.onkeyup = keyboard.release;
@@ -22,4 +32,4 @@ var load = function() {
   game.start(data);
 };
 window.onload = load;
-window.onresize = resize;
+// window.onresize = resize;
