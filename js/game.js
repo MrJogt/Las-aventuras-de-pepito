@@ -10,14 +10,14 @@ var game = {
   dynamicList:  [],
   elements: [],
   level: null,
-  time: 60,
+  time: 40,
   intentos: 0,
   image: new Image(),
   imageWin: new Image(),
   imageLost: new Image(),
   imagePause: new Image(),
   timeIntervalId: undefined,
-  startLevel1: function(){},
+  updateInterval: undefined,
   start: function(canvas) {
     this.x = canvas.x;
     this.y = canvas.y;
@@ -30,6 +30,68 @@ var game = {
     this.imageWin.src = 'img/Has_Ganado.png';
     this.imageLost.src = 'img/Game_Over.png';
     this.imagePause.src = 'img/Pause.jpg';
+    var i, j, id, cardsWidth, cardsHeight
+    cardsHeight = 150 // (game.height / 5)
+    cardsWidth = 150 // (game.width / 4)
+
+    let groups = {
+      0: { 0: '', 1: '', 2: '', 3: ''},
+      1: { 0: '', 1: '', 2: '', 3: ''},
+      2: { 0: '', 1: '', 2: '', 3: ''},
+      3: { 0: '', 1: '', 2: '', 3: ''},
+    };
+
+    const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+    const count = { 'A': 0, 'B': 0, 'C': 0, 'D': 0, 'E': 0, 'F': 0, 'G': 0, 'H': 0}
+
+    function getRandomArbitrary(min, max) {
+      return parseInt(Math.random() * (max - min) + min)
+    }
+
+    function getLetter (index, i) {
+      var letter
+      var num = getRandomArbitrary(0, 8)
+      letter = letters[num]
+      if (count[letter] >= 2) return getLetter(index, i)
+      else {
+        count[letter]++
+        return letter
+      }
+    }
+
+    Object.keys(groups).forEach(function(a, index){
+      Object.keys(groups[index]).forEach(function (b, i) {
+        groups[index][i] = getLetter(index, i)
+      })
+    })
+
+    console.log(groups)
+
+    for(i = 0; i < 4; i++){
+      for(j = 0; j < 4; j++){
+        id = 'cards'+j+i
+        cards.create(id, j * cardsWidth + 5,
+                      i * cardsHeight + 5,
+                      cardsWidth - 10,
+                      cardsHeight - 10 ,
+                      groups[i][j])
+        game.dynamicList.push(cards.list[id])
+      }
+    }
+      // }
+    for (var i = 0; i < game.elements.length; i++) {
+      game.elements[i].init();
+    }
+    for (var i = 0; i < game.dynamicList.length; i++) {
+      game.dynamicList[i].init();
+    }
+    this.timeIntervalId = setInterval(this.timer.bind(this), 1000)
+    this.updateInterval = setInterval(this.update.bind(this), 1000/60);
+  },
+  startLevelMid: function(canvas){
+    this.time = 50;
+    this.state = gameStatesEnum.playing;
+    this.level = gamelevelEnum.mid;
     var i, j, id, cardsWidth, cardsHeight
     cardsHeight = 150 // (game.height / 5)
     cardsWidth = 150 // (game.width / 4)
@@ -84,22 +146,22 @@ var game = {
       game.dynamicList[i].init();
     }
     this.timeIntervalId = setInterval(this.timer.bind(this), 1000)
-    setInterval(this.update.bind(this), 1000/60);
+    this.updateInterval = setInterval(this.update.bind(this), 1000/60);
   },
-  startLevel2: function(canvas){
+  startLevelBig: function(canvas){
+    this.time = 80;
     this.state = gameStatesEnum.playing;
-    this.level = gamelevelEnum.mid;
+    this.level = gamelevelEnum.big;
     var i, j, id, cardsWidth, cardsHeight
-    cardsHeight = 150 // (game.height / 5)
-    cardsWidth = 150 // (game.width / 4)
+    cardsHeight = 110 // (game.height / 5)
+    cardsWidth = 110 // (game.width / 4)
 
     let groups = {
-      0: { 0: '', 1: '', 2: '', 3: '', 4: ''},
-      1: { 0: '', 1: '', 2: '', 3: '', 4: ''},
-      2: { 0: '', 1: '', 2: '', 3: '', 4: ''},
-      3: { 0: '', 1: '', 2: '', 3: '', 4: ''},
-      4: { 0: '', 1: '', 2: '', 3: '', 4: ''},
-      5: { 0: '', 1: '', 2: '', 3: '', 4: ''},
+      0: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
+      1: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
+      2: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
+      3: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
+      4: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
     };
 
     const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J','K','L','M', 'N', 'O']
@@ -127,8 +189,71 @@ var game = {
       })
     })
 
+    for(i = 0; i < 5; i++){
+      for(j = 0; j < 6; j++){
+        id = 'cards'+j+i
+        cards.create(id, j * cardsWidth + 5,
+                      i * cardsHeight + 5,
+                      cardsWidth - 10,
+                      cardsHeight - 10 ,
+                      groups[i][j])
+        game.dynamicList.push(cards.list[id])
+      }
+    }
+      // }
+    for (var i = 0; i < game.elements.length; i++) {
+      game.elements[i].init();
+    }
+    for (var i = 0; i < game.dynamicList.length; i++) {
+      game.dynamicList[i].init();
+    }
+    this.timeIntervalId = setInterval(this.timer.bind(this), 1000)
+    this.updateInterval = setInterval(this.update.bind(this), 1000/60);
+  },
+  startLevelLast: function(){
+    this.time = 80;
+    this.state = gameStatesEnum.playing;
+    this.level = gamelevelEnum.last;
+    var i, j, id, cardsWidth, cardsHeight
+    cardsHeight = 100 // (game.height / 5)
+    cardsWidth = 100 // (game.width / 4)
+
+    let groups = {
+      0: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
+      1: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
+      2: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
+      3: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
+      4: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
+      5: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
+    };
+
+    const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J','K','L','M', 'N', 'O', 'P', 'Q', 'R']
+    const count = { 'A': 0, 'B': 0, 'C': 0, 'D': 0, 'E': 0, 'F': 0, 'G': 0, 'H': 0, 'I': 0, 'J': 0, 'K': 0,
+    'L': 0, 'M': 0, 'N': 0, 'O': 0, 'P': 0, 'Q': 0, 'R': 0 }
+
+    function getRandomArbitrary(min, max) {
+      return parseInt(Math.random() * (max - min) + min)
+    }
+
+    function getLetter (index, i) {
+      var letter
+      var num = getRandomArbitrary(0, 18)
+      letter = letters[num]
+      if (count[letter] >= 2) return getLetter(index, i)
+      else {
+        count[letter]++
+        return letter
+      }
+    }
+
+    Object.keys(groups).forEach(function(a, index){
+      Object.keys(groups[index]).forEach(function (b, i) {
+        groups[index][i] = getLetter(index, i)
+      })
+    })
+
     for(i = 0; i < 6; i++){
-      for(j = 0; j < 5; j++){
+      for(j = 0; j < 6; j++){
         id = 'cards'+j+i
         cards.create(id, j * cardsWidth + 5,
                       i * cardsHeight + 5,
@@ -148,7 +273,6 @@ var game = {
     this.timeIntervalId = setInterval(this.timer.bind(this), 1000)
     setInterval(this.update.bind(this), 1000/60);
   },
-  startLevel3: function(){},
   timer: function () {
     this.time--
     },
@@ -163,13 +287,24 @@ var game = {
     this.lastStateChange = 0;
   },
   win: function() {
-    if (this.level === gamelevelEnum.initial){
-      this.level = gamelevelEnum.mid;
-      this.startLevel2();
-      this.time = 60;
-    }
-    else if (this.level === gamelevelEnum.mid) {
-      this.state = gameStatesEnum.win;
+    clearInterval(this.timeIntervalId)
+    clearInterval(this.updateInterval)
+    this.intentos = 0
+    switch (this.level) {
+      case gamelevelEnum.initial:
+        this.startLevelMid()
+        break;
+      case gamelevelEnum.mid:
+        this.startLevelBig()
+        break;
+      case gamelevelEnum.big:
+        this.startLevelLast()
+        break;
+      case gamelevelEnum.last:
+        this.state = gameStatesEnum.win;
+        break;
+      default:
+
     }
   },
   over: function() {
@@ -193,12 +328,9 @@ var game = {
     if(this.time == 0){
       this.over()
     }
-    if(Object.keys(cards.list).length === 0 /*&& this.state === gamelevelEnum.last*/) {
+    if(Object.keys(cards.list).length === 0) {
       this.win()
     }
-    // else if (Object.keys(cards.list).length === 10 && this.state === gamelevelEnum.initial) {
-    //   gamelevelEnum++;
-    // }
     this.render();
   },
   render: function() {
@@ -237,8 +369,8 @@ var game = {
     this.context.fillRect(this.width - 100, 10, 80, 80);
     text.draw(game.time, '#000', null, null, null, null, 49, 45);
     text.draw('Intentos', '#000', 15, null, null, null, this.width - 60, 80);
-    text.draw(game.intentos, '#000', null, null, null, null, this.width - 50, 45);
-    text.draw(game.intentos, '#000', null, null, null, null, this.width - 50, 45);
+    text.draw(Math.floor(game.intentos/2), '#000', null, null, null, null, this.width - 50, 45);
+    // text.draw(game.intentos/2, '#000', null, null, null, null, this.width - 50, 45);
   }
 };
 var gameStatesEnum = {
@@ -250,5 +382,6 @@ var gameStatesEnum = {
 var gamelevelEnum = {
   initial: '1',
   mid: '2',
-  last: '3',
+  big: '3',
+  last: '4',
 };

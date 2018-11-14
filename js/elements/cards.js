@@ -15,6 +15,7 @@ var cards = {
       image: new Image(),
       init: function() {
         this.image.src = 'img/DorsoCartas.jpg';
+        this.flip()
       },
       checkClick: function () {
         if(!cards.waiting) {
@@ -59,7 +60,7 @@ var cards = {
           this.image.src = 'img/pelota_voley.png';
             break;
           case 'B':
-          this.image.src = 'img/Pelota_Tenis.png';
+          this.image.src = 'img/Pelota_Tenis.jpg';
             break;
           case 'C':
           this.image.src = 'img/Pelota_Futbol.png';
@@ -77,13 +78,28 @@ var cards = {
           this.image.src = 'img/Pelota_Bola8.png';
               break;
           case 'H':
-          this.image.src = 'img/Pelota_Baseball.png';
+          this.image.src = 'img/Pelota_Baseball.jpg';
               break;
           case 'I':
           this.image.src = 'img/Pelota_FAmericano.png';
               break;
           case 'J':
-          this.image.src = 'img/Pelota_Badmintong.png';
+          this.image.src = 'img/Pelota_Badmintong.jpg';
+              break;
+          case 'K':
+          this.image.src = 'img/Arco_Futboll.jpg';
+              break;
+          case 'L':
+          this.image.src = 'img/Aro_Basquet.jpg';
+              break;
+          case 'M':
+          this.image.src = 'img/Cronometro.jpg';
+              break;
+          case 'N':
+          this.image.src = 'img/Raqueta_Tenis.png';
+              break;
+          case 'O':
+          this.image.src = 'img/Red_Volley.jpg';
               break;
         }
         this.backgroundColor = '#CCCCFF'
