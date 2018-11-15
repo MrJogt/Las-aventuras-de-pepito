@@ -33,21 +33,17 @@ var game = {
     var i, j, id, cardsWidth, cardsHeight
     cardsHeight = 150 // (game.height / 5)
     cardsWidth = 150 // (game.width / 4)
-
     let groups = {
       0: { 0: '', 1: '', 2: '', 3: ''},
       1: { 0: '', 1: '', 2: '', 3: ''},
       2: { 0: '', 1: '', 2: '', 3: ''},
       3: { 0: '', 1: '', 2: '', 3: ''},
     };
-
     const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
     const count = { 'A': 0, 'B': 0, 'C': 0, 'D': 0, 'E': 0, 'F': 0, 'G': 0, 'H': 0}
-
     function getRandomArbitrary(min, max) {
       return parseInt(Math.random() * (max - min) + min)
     }
-
     function getLetter (index, i) {
       var letter
       var num = getRandomArbitrary(0, 8)
@@ -58,15 +54,12 @@ var game = {
         return letter
       }
     }
-
     Object.keys(groups).forEach(function(a, index){
       Object.keys(groups[index]).forEach(function (b, i) {
         groups[index][i] = getLetter(index, i)
       })
     })
-
     console.log(groups)
-
     for(i = 0; i < 4; i++){
       for(j = 0; j < 4; j++){
         id = 'cards'+j+i
@@ -78,7 +71,6 @@ var game = {
         game.dynamicList.push(cards.list[id])
       }
     }
-      // }
     for (var i = 0; i < game.elements.length; i++) {
       game.elements[i].init();
     }
@@ -95,21 +87,17 @@ var game = {
     var i, j, id, cardsWidth, cardsHeight
     cardsHeight = 150 // (game.height / 5)
     cardsWidth = 150 // (game.width / 4)
-
     let groups = {
       0: { 0: '', 1: '', 2: '', 3: '', 4: ''},
       1: { 0: '', 1: '', 2: '', 3: '', 4: ''},
       2: { 0: '', 1: '', 2: '', 3: '', 4: ''},
       3: { 0: '', 1: '', 2: '', 3: '', 4: ''},
     };
-
     const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     const count = { 'A': 0, 'B': 0, 'C': 0, 'D': 0, 'E': 0, 'F': 0, 'G': 0, 'H': 0, 'I': 0, 'J': 0 }
-
     function getRandomArbitrary(min, max) {
       return parseInt(Math.random() * (max - min) + min)
     }
-
     function getLetter (index, i) {
       var letter
       var num = getRandomArbitrary(0, 10)
@@ -120,13 +108,11 @@ var game = {
         return letter
       }
     }
-
     Object.keys(groups).forEach(function(a, index){
       Object.keys(groups[index]).forEach(function (b, i) {
         groups[index][i] = getLetter(index, i)
       })
     })
-
     for(i = 0; i < 4; i++){
       for(j = 0; j < 5; j++){
         id = 'cards'+j+i
@@ -138,7 +124,6 @@ var game = {
         game.dynamicList.push(cards.list[id])
       }
     }
-      // }
     for (var i = 0; i < game.elements.length; i++) {
       game.elements[i].init();
     }
@@ -155,7 +140,6 @@ var game = {
     var i, j, id, cardsWidth, cardsHeight
     cardsHeight = 110 // (game.height / 5)
     cardsWidth = 110 // (game.width / 4)
-
     let groups = {
       0: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
       1: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
@@ -163,15 +147,12 @@ var game = {
       3: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
       4: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
     };
-
     const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J','K','L','M', 'N', 'O']
-    const count = { 'A': 0, 'B': 0, 'C': 0, 'D': 0, 'E': 0, 'F': 0, 'G': 0, 'H': 0, 'I': 0, 'J': 0, 'K': 0,
-    'L': 0, 'M': 0, 'N': 0, 'O': 0, }
-
+    const count = { 'A': 0, 'B': 0, 'C': 0, 'D': 0, 'E': 0, 'F': 0, 'G': 0, 'H': 0, 'I': 0, 'J': 0,
+    'K': 0, 'L': 0, 'M': 0, 'N': 0, 'O': 0, }
     function getRandomArbitrary(min, max) {
       return parseInt(Math.random() * (max - min) + min)
     }
-
     function getLetter (index, i) {
       var letter
       var num = getRandomArbitrary(0, 15)
@@ -182,13 +163,11 @@ var game = {
         return letter
       }
     }
-
     Object.keys(groups).forEach(function(a, index){
       Object.keys(groups[index]).forEach(function (b, i) {
         groups[index][i] = getLetter(index, i)
       })
     })
-
     for(i = 0; i < 5; i++){
       for(j = 0; j < 6; j++){
         id = 'cards'+j+i
@@ -200,7 +179,6 @@ var game = {
         game.dynamicList.push(cards.list[id])
       }
     }
-      // }
     for (var i = 0; i < game.elements.length; i++) {
       game.elements[i].init();
     }
@@ -217,7 +195,6 @@ var game = {
     var i, j, id, cardsWidth, cardsHeight
     cardsHeight = 100 // (game.height / 5)
     cardsWidth = 100 // (game.width / 4)
-
     let groups = {
       0: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
       1: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
@@ -226,15 +203,12 @@ var game = {
       4: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
       5: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: ''},
     };
-
     const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J','K','L','M', 'N', 'O', 'P', 'Q', 'R']
     const count = { 'A': 0, 'B': 0, 'C': 0, 'D': 0, 'E': 0, 'F': 0, 'G': 0, 'H': 0, 'I': 0, 'J': 0, 'K': 0,
     'L': 0, 'M': 0, 'N': 0, 'O': 0, 'P': 0, 'Q': 0, 'R': 0 }
-
     function getRandomArbitrary(min, max) {
       return parseInt(Math.random() * (max - min) + min)
     }
-
     function getLetter (index, i) {
       var letter
       var num = getRandomArbitrary(0, 18)
@@ -245,13 +219,11 @@ var game = {
         return letter
       }
     }
-
     Object.keys(groups).forEach(function(a, index){
       Object.keys(groups[index]).forEach(function (b, i) {
         groups[index][i] = getLetter(index, i)
       })
     })
-
     for(i = 0; i < 6; i++){
       for(j = 0; j < 6; j++){
         id = 'cards'+j+i
@@ -263,7 +235,6 @@ var game = {
         game.dynamicList.push(cards.list[id])
       }
     }
-      // }
     for (var i = 0; i < game.elements.length; i++) {
       game.elements[i].init();
     }
@@ -304,13 +275,22 @@ var game = {
         this.state = gameStatesEnum.win;
         break;
       default:
-
     }
   },
   over: function() {
     clearInterval(this.timeIntervalId)
     this.state = gameStatesEnum.over;
   },
+
+
+
+  // reset: function(){
+  //   this.state = gameStatesEnum.reset;
+  // },
+
+
+
+
   update: function() {
     ++this.lastStateChange;
     if(this.state === gameStatesEnum.playing) {
@@ -324,6 +304,9 @@ var game = {
     }
     if(keyboard.p && this.lastStateChange > 30) {
       this.pause();
+    }
+    if(keyboard.r && this.lastStateChange > 30) {
+      this.reset();
     }
     if(this.time == 0){
       this.over()
@@ -351,11 +334,11 @@ var game = {
       switch(this.state) {
         case gameStatesEnum.pause:
         this.context.drawImage(this.imagePause, this.x, this.y, this.width, this.height);
-          text.draw('Modo de juego:', '#FF99FF', null, null, null, null, game.width/2, game.height/2 + 110);
+          text.draw('Modo de juego:', '#FF99FF', null, null, null, null, game.width/2, game.height/2 + 130);
           text.draw('Cada carta tiene su par identico, debes', '#FF99FF',
-                    null, null, null, null, game.width/2, game.height/2 + 135);
+                    null, null, null, null, game.width/2, game.height/2 + 155);
           text.draw('encontrar todos los pares para superar el nivel', '#FF99FF',
-                    null, null, null, null, game.width/2, game.height/2 + 160);
+                    null, null, null, null, game.width/2, game.height/2 + 180);
           break;
         case gameStatesEnum.win:
             this.context.drawImage(this.imageWin, this.x, this.y, this.width, this.height);
@@ -370,14 +353,14 @@ var game = {
     text.draw(game.time, '#000', null, null, null, null, 49, 45);
     text.draw('Intentos', '#000', 15, null, null, null, this.width - 60, 80);
     text.draw(Math.floor(game.intentos/2), '#000', null, null, null, null, this.width - 50, 45);
-    // text.draw(game.intentos/2, '#000', null, null, null, null, this.width - 50, 45);
   }
 };
 var gameStatesEnum = {
   playing: 'playing',
   pause: 'pause',
   win: 'w',
-  over: 'o'
+  over: 'o',
+  reset: 'r'
 }
 var gamelevelEnum = {
   initial: '1',

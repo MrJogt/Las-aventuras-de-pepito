@@ -4,7 +4,6 @@ var resize = function(evt) {
   var windowRatio = window.innerHeight / window.innerWidth;
   var width;
   var height;
-
   if (windowRatio < canvasRatio) {
       height = window.innerHeight;
       width = height / canvasRatio;
@@ -12,7 +11,6 @@ var resize = function(evt) {
       width = window.innerWidth;
       height = width * canvasRatio;
   }
-
   canvas.style.width = width + 'px';
   canvas.style.height = height + 'px';
 };

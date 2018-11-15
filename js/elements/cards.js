@@ -15,7 +15,6 @@ var cards = {
       image: new Image(),
       init: function() {
         this.image.src = 'img/DorsoCartas.jpg';
-        this.flip()
       },
       checkClick: function () {
         if(!cards.waiting) {
@@ -100,6 +99,15 @@ var cards = {
               break;
           case 'O':
           this.image.src = 'img/Red_Volley.jpg';
+              break;
+          case 'P':
+          this.image.src = 'img/Bate_Baseball.jpg';
+              break;
+          case 'Q':
+          this.image.src = 'img/Botin_Futbol.png';
+              break;
+          case 'R':
+          this.image.src = 'img/Tacos_Billar.png';
               break;
         }
         this.backgroundColor = '#CCCCFF'
