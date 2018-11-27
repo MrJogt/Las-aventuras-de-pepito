@@ -16,6 +16,7 @@ var game = {
   imageWin: new Image(),
   imageLost: new Image(),
   imagePause: new Image(),
+  imagePassLevel: new Image(),
   timeIntervalId: undefined,
   updateInterval: undefined,
   start: function(canvas) {
@@ -30,7 +31,8 @@ var game = {
     this.imageWin.src = 'img/Has_Ganado.png';
     this.imageLost.src = 'img/Game_Over.png';
     this.imagePause.src = 'img/Pause.jpg';
-    var i, j, id, cardsWidth, cardsHeight
+    this.imagePassLevel.src = 'img/Nivel_Superado.jpg';
+        var i, j, id, cardsWidth, cardsHeight
     cardsHeight = 150 // (game.height / 5)
     cardsWidth = 150 // (game.width / 4)
     let groups = {
@@ -257,18 +259,28 @@ var game = {
     }
     this.lastStateChange = 0;
   },
+  pass: function(){
+    //this.context.drawImage(this.imagePassLevel, this.x, this.y, this.width, this.height);
+
+    this.pass = true;
+    console.log(this.pass);
+  },
+
   win: function() {
     clearInterval(this.timeIntervalId)
     clearInterval(this.updateInterval)
     this.intentos = 0
     switch (this.level) {
       case gamelevelEnum.initial:
+        this.pass()
         this.startLevelMid()
         break;
       case gamelevelEnum.mid:
+        this.pass()
         this.startLevelBig()
         break;
       case gamelevelEnum.big:
+        this.pass()
         this.startLevelLast()
         break;
       case gamelevelEnum.last:
@@ -281,16 +293,9 @@ var game = {
     clearInterval(this.timeIntervalId)
     this.state = gameStatesEnum.over;
   },
-
-
-
-  // reset: function(){
-  //   this.state = gameStatesEnum.reset;
-  // },
-
-
-
-
+  reset: function(){
+    location.reload();
+  },
   update: function() {
     ++this.lastStateChange;
     if(this.state === gameStatesEnum.playing) {
@@ -317,7 +322,7 @@ var game = {
     this.render();
   },
   render: function() {
-    if(this.state === gameStatesEnum.playing) {
+    if(this.state === gameStatesEnum.playing /*&& this.pass == false*/) {
       //limpio la pantalla
       this.context.fillStyle = this.backgroundColor;
       this.context.drawImage(this.image, this.x, this.y, this.width, this.height);
@@ -358,6 +363,7 @@ var game = {
 var gameStatesEnum = {
   playing: 'playing',
   pause: 'pause',
+  pass: 'pass',
   win: 'w',
   over: 'o',
   reset: 'r'
